@@ -13,7 +13,7 @@ db = client['biology']
 pages_collection = db.pages
 
 frontier = ['https://www.cpp.edu/sci/biological-sciences/index.shtml']
-num_prof = 10
+num_targets = 10
 
 #stores pages
 def storePages(url, html):
