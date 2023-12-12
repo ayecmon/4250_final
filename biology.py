@@ -132,9 +132,10 @@ def build_inverted_index_tfidf():
     client = MongoClient('localhost', 27017)
     db = client['biology']
     target_pages_collection = db.target_pages
+    stop_words = ['I', 'and', 'She', 'They', 'her', 'their']
 
     # Initialize a TfidfVectorizer
-    vectorizer = TfidfVectorizer()
+    vectorizer = TfidfVectorizer(stop_words=stop_words)
 
     # Get all documents from the target_pages_collection
     documents = target_pages_collection.find()
