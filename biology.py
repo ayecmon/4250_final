@@ -1,4 +1,3 @@
-import urllib
 from urllib.request import urlopen
 from urllib.error import HTTPError
 from urllib.error import URLError
@@ -10,14 +9,10 @@ from typing import List
 
 
 def main():
-    # Connect to MongoDB
     seed_urls = ['https://www.cpp.edu/sci/biological-sciences/index.shtml']
     frontier = CrawlerFrontier(seed_urls)
     num_targets = 10
     crawlerThread(frontier, num_targets)
-
-# Sample inverted index structure:
-# {term: {'doc_ids': [doc_id1, doc_id2], 'counts': {'doc_id1': count1, 'doc_id2': count2}}}
 
 class CrawlerFrontier:
     def __init__(self, seed_frontier: List[str]):
@@ -27,6 +22,7 @@ class CrawlerFrontier:
 # stores pages
 def storePages(url, html):
     try:
+        # Connect to mongo
         client = MongoClient('localhost', 27017)
         db = client['biology']
         pages_collection = db.pages
@@ -43,7 +39,7 @@ def storePages(url, html):
 
         # Check if it's a target page and store in the target pages collection
         if targetPage(html):
-            target_pages_collection.insert_one({"_id": document_id, 'faculty_content': faculty_content})
+            target_pages_collection.insert_one({"_id": document_id, 'faculty_content': faculty_content, 'url': url})
     except Exception:
         print("Error while storing the page in the database.")
 
@@ -87,7 +83,6 @@ def parse(html, baseUrl):
 def parse_faculty_content(html):
     bs = BeautifulSoup(html, 'html.parser')
 
-    # MODIFY THIS LINE based on the actual structure of your HTML
     fac_staff_div = bs.find('div', {'class': 'fac-staff'})
     accolades_div = bs.find('div', {'class': 'accolades'})
     fac_info_div = bs.find('div', {'class': 'fac-info'})
@@ -132,7 +127,8 @@ def build_inverted_index_tfidf():
     client = MongoClient('localhost', 27017)
     db = client['biology']
     target_pages_collection = db.target_pages
-    stop_words = ['I', 'and', 'She', 'They', 'her', 'their']
+    inverted_index_collection = db.inverted_index  # New collection for the inverted index
+    stop_words = ['I', 'and', 'she', 'She', 'they', 'They', 'her', 'their', 'the']
 
     # Initialize a TfidfVectorizer
     vectorizer = TfidfVectorizer(stop_words=stop_words)
@@ -163,8 +159,11 @@ def build_inverted_index_tfidf():
             if term not in inverted_index:
                 inverted_index[term] = {'doc_ids': [], 'tfidf_scores': {}}
 
-            inverted_index[term]['doc_ids'].append(doc_id)
-            inverted_index[term]['tfidf_scores'][doc_id] = tfidf_score
+            inverted_index[term]['doc_ids'].append(str(doc_id))  # Convert to string
+            inverted_index[term]['tfidf_scores'][str(doc_id)] = tfidf_score
+
+    # Store the inverted index in MongoDB
+    inverted_index_collection.insert_one({'inverted_index': inverted_index})
 
     return inverted_index
 
