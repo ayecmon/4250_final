@@ -20,20 +20,20 @@ This project follows a branching strategy to organize different tasks and featur
 - **index_counts:** This branch includes implementation of indexing and search engine.
 
 ## Features
-- Demo Video
+- Demo Video:
 https://livecsupomona-my.sharepoint.com/:v:/g/personal/acmon_cpp_edu/EaOtasUUb-1FuZDbI9FkMkYByF0CWU448okABj8mJsBB-g?e=7idlMV&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D
 
 ## Contributors
 
 - [Aye Mon (@ayecmon)](https://github.com/ayecmon)
   - implements crawlerThread function and skeleton of crawler.
-
+  - 
 - [Alejandro Mora-Lopez (@amora7741)](https://github.com/amora7741)
   - implements the ‘parse’ function in the crawler. This function allowed every relevant link to be stored in order for the crawler to visit.
   - 
 - [Francisco Serrano (@franserr99)](https://github.com/franserr99)
   - implements target function. This function identified relevant pages, which were found by following a default page pattern
-
+    
 - [Kevin Vi (@kvicode)](https://github.com/kvicode)
   - was in charge to parse faculty data and indexing it
 
