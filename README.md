@@ -27,10 +27,10 @@ https://livecsupomona-my.sharepoint.com/:v:/g/personal/acmon_cpp_edu/EaOtasUUb-1
 
 - [Aye Mon (@ayecmon)](https://github.com/ayecmon)
   - implements crawlerThread function and skeleton of crawler.
-  - 
+    
 - [Alejandro Mora-Lopez (@amora7741)](https://github.com/amora7741)
   - implements the ‘parse’ function in the crawler. This function allowed every relevant link to be stored in order for the crawler to visit.
-  - 
+    
 - [Francisco Serrano (@franserr99)](https://github.com/franserr99)
   - implements target function. This function identified relevant pages, which were found by following a default page pattern
     
